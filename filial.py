@@ -57,6 +57,44 @@ def add_filial(id: int, nome: str, bairro: str) -> int:
         return ARQUIVO_EM_FORMATO_INVALIDO  # Arquivo em formato inválido
     except Exception as e:
         return ERRO_DESCONHECIDO  # Outro erro desconhecido
+
+def del_filial(id_filial: int) -> int:
+    """
+    Remove uma filial do arquivo JSON de filiais com base no ID fornecido.
+
+    Args:
+        id_filial (int): ID da filial a ser removida.
+
+    Returns:
+        int: Código de retorno indicando o resultado da operação.
+    """
+    try:
+        # Carrega o arquivo de filiais existente
+        with open(_FILIAIS_JSON_FILE_PATH, 'r') as file:
+            filiais = json.load(file)
+
+        # Verifica se a filial com o ID especificado existe
+        filial_encontrada = False
+        for filial in filiais:
+            if filial['id'] == id_filial:
+                filiais.remove(filial)
+                filial_encontrada = True
+                break
+
+        if not filial_encontrada:
+            return ERRO_DESCONHECIDO  # ou um código específico para filial não encontrada
+
+        # Escreve de volta ao arquivo JSON
+        with open(_FILIAIS_JSON_FILE_PATH, 'w') as file:
+            json.dump(filiais, file, indent=4)
+
+        return OPERACAO_REALIZADA_COM_SUCESSO  # Operação bem-sucedida
+    except FileNotFoundError:
+        return ARQUIVO_NAO_ENCONTRADO  # Arquivo não encontrado
+    except json.JSONDecodeError:
+        return ARQUIVO_EM_FORMATO_INVALIDO  # Arquivo em formato inválido
+    except Exception as e:
+        return ERRO_DESCONHECIDO  # Outro erro desconhecido
         
 def get_filial(id: int) -> Tuple[int, Union[Dict[str, str], None]]:
     """

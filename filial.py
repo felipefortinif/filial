@@ -18,7 +18,7 @@ FILIAL_NAO_ENCONTRADA = 33  # Código de retorno para filial não encontrada
 ERRO_DESCONHECIDO = 34  # Código de retorno para erro desconhecido
 BAIRRO_NAO_ENCONTRADO = 35  # Código de retorno para bairro não encontrado
 
-def criar_filial(id: int, nome: str, bairro: str) -> int:
+def add_filial(id: int, nome: str, bairro: str) -> int:
     """
     Cria uma nova filial e adiciona ao arquivo JSON de filiais.
 
@@ -58,7 +58,7 @@ def criar_filial(id: int, nome: str, bairro: str) -> int:
     except Exception as e:
         return ERRO_DESCONHECIDO  # Outro erro desconhecido
         
-def consulta_filial(id: int) -> Tuple[int, Union[Dict[str, str], None]]:
+def get_filial(id: int) -> Tuple[int, Union[Dict[str, str], None]]:
     """
     Consulta uma filial pelo seu ID no arquivo JSON correspondente.
 
